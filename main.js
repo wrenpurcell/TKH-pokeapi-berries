@@ -8,16 +8,24 @@ const berriesArray = await berryData.berries
 
 const arrayOfpromises = berriesArray.map(async (berryObj)=>{
   const response =await axios.get(berryObj.berry.url)
-  return response 
+  return response.data
 })
 
 const newArrayOfBerryData = await Promise.all(arrayOfpromises)
-console.log(newArrayOfBerryData)
+// console.log(newArrayOfBerryData)
 
 const hardBerries = newArrayOfBerryData
 //keep only berry objects that the firmness property set to hard
-.filter((berryObj)=>berryObj.data.firmness.name === "hard")
-//turn each hard berry object into just the data part of the object
-.map((firmBerryObj)=>firmBerryObj.data)
-
+.filter((berryObj)=>berryObj.firmness.name === "hard")
 console.log(hardBerries)
+
+
+
+//creates an array of objects, instead of an array of arrays of objects
+const arrayOfflavorObjects = newArrayOfBerryData.flatMap(berry => berry.flavors)
+
+console.log(arrayOfflavorObjects); 
+
+
+
+
